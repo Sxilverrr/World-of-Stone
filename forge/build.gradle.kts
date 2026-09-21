@@ -105,6 +105,7 @@ tasks.processResources {
         "version" to mod.version,
         "minecraft" to common.mod.prop("mc_dep_forgelike"),
         "forge_range" to common.mod.prop("forge_range"),
+        "javafml_range" to common.mod.prop("javafml_range"),
         "architectury_range" to common.mod.prop("architectury_range")
     )
 }

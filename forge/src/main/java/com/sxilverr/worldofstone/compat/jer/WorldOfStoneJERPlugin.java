@@ -22,7 +22,6 @@ import jeresources.compatibility.api.JERAPI;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
 import dev.architectury.registry.registries.RegistrySupplier;
 import org.slf4j.Logger;
 

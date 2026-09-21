@@ -1,5 +1,6 @@
 package com.sxilverr.worldofstone.neoforge;
 
+import com.sxilverr.worldofstone.config.WosConfigSync;
 import com.sxilverr.worldofstone.neoforge.compat.jer.WorldOfStoneJERPlugin;
 import com.sxilverr.worldofstone.neoforge.registry.WosBlockEntities;
 import com.sxilverr.worldofstone.neoforge.registry.WosCreativeTabs;
@@ -33,6 +34,7 @@ public final class WorldOfStoneNeoForge {
         WosCreativeTabs.TABS.register(modBus);
 
         container.registerConfig(ModConfig.Type.COMMON, WosConfigSpec.COMMON_SPEC);
+        WosConfigSync.init();
 
         modBus.addListener(this::onCommonSetup);
     }

@@ -1038,6 +1038,20 @@ public final class WosBlocks {
                 .requiresCorrectToolForDrops();
     }
 
+    private static final java.util.List<Map<?, RegistrySupplier<Block>>> INFESTED_HOSTS = java.util.List.of(
+            IGNEOUS_STONE, IGNEOUS_COBBLE, IGNEOUS_BRICK, IGNEOUS_MOSSY_BRICK, IGNEOUS_CRACKED_BRICK, IGNEOUS_CHISELED_BRICK,
+            METAMORPHIC_STONE, METAMORPHIC_COBBLE, METAMORPHIC_BRICK, METAMORPHIC_MOSSY_BRICK, METAMORPHIC_CRACKED_BRICK, METAMORPHIC_CHISELED_BRICK,
+            SEDIMENTARY_STONE, SEDIMENTARY_COBBLE, SEDIMENTARY_BRICK, SEDIMENTARY_MOSSY_BRICK, SEDIMENTARY_CRACKED_BRICK, SEDIMENTARY_CHISELED_BRICK);
+
+    public static boolean isInfestedHost(Block block) {
+        for (Map<?, RegistrySupplier<Block>> hosts : INFESTED_HOSTS) {
+            for (RegistrySupplier<Block> ro : hosts.values()) {
+                if (ro.isPresent() && ro.get() == block) return true;
+            }
+        }
+        return block instanceof com.sxilverr.worldofstone.common.block.WosInfestedBlock;
+    }
+
     public static void init() {
     }
 

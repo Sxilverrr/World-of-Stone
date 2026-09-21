@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "*"
+loaderVersion = "[4,)"
 license = "GPL-2.0-only"
 issueTrackerURL = "https://www.curseforge.com/minecraft/mc-mods/world-of-stone"
 
@@ -19,7 +19,7 @@ logoFile = "icon.png"
 [[dependencies.${id}]]
 modId = "neoforge"
 type = "required"
-versionRange = "*"
+versionRange = "${neoforge_range}"
 ordering = "NONE"
 side = "BOTH"
 
@@ -34,5 +34,19 @@ side = "BOTH"
 modId = "architectury"
 type = "required"
 versionRange = "${architectury_range}"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "jeresources"
+type = "optional"
+versionRange = "*"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "jei"
+type = "optional"
+versionRange = "*"
 ordering = "AFTER"
 side = "BOTH"

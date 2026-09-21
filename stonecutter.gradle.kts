@@ -1,18 +1,16 @@
 plugins {
     id("dev.kikugie.stonecutter")
-    id("dev.architectury.loom") version "1.9-SNAPSHOT" apply false
-    id("architectury-plugin") version "3.4-SNAPSHOT" apply false
+    id("dev.architectury.loom") version "1.9.436" apply false
+    id("architectury-plugin") version "3.4.164" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
 }
 stonecutter active "1.20.1" /* [SC] DO NOT EDIT */
 
-// Builds every version into `build/libs/{mod.version}/{loader}`
 stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {
     group = "project"
     ofTask("buildAndCollect")
 }
 
-// Builds loader-specific versions into `build/libs/{mod.version}/{loader}`
 for (it in stonecutter.tree.branches) {
     if (it.id.isEmpty()) continue
     val loader = it.id.upperCaseFirst()
@@ -23,7 +21,6 @@ for (it in stonecutter.tree.branches) {
     }
 }
 
-// Runs active versions for each loader
 for (it in stonecutter.tree.nodes) {
     if (it.metadata != stonecutter.current || it.branch.id.isEmpty()) continue
     val types = listOf("Client", "Server")

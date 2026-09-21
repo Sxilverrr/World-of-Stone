@@ -71,10 +71,6 @@ FOSSIL_TEXTURE_SOURCE = {
 
 LANG = {}
 
-# Block IDs starting with these prefixes are only registered when the matching
-# mod is loaded. Tag entries referencing them must be marked optional, or the
-# whole tag fails to load when the mod is absent (which cascades to every
-# downstream tag like minecraft:mineable/pickaxe).
 MOD_COMPAT_PREFIXES = ("worldofstone:quark_", "worldofstone:undergarden_",
                        "worldofstone:create_", "worldofstone:betterend_",
                        "worldofstone:galosphere_", "worldofstone:bwg_",

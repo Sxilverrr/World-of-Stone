@@ -2,6 +2,7 @@ package com.sxilverr.worldofstone;
 
 import com.mojang.logging.LogUtils;
 import com.sxilverr.worldofstone.api.ModInfo;
+import com.sxilverr.worldofstone.config.WosConfigSync;
 import com.sxilverr.worldofstone.forge.WosConfigSpec;
 import com.sxilverr.worldofstone.forge.registry.WosBlockEntities;
 import com.sxilverr.worldofstone.registry.WosBlocks;
@@ -45,6 +46,7 @@ public class WorldofStone {
         WosFeatures.FEATURES.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, WosConfigSpec.COMMON_SPEC);
+        WosConfigSync.init();
 
         modEventBus.addListener(this::onCommonSetup);
 

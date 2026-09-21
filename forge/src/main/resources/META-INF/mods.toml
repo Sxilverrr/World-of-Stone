@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "${forge_range}"
+loaderVersion = "${javafml_range}"
 license = "GPL-2.0-only"
 issueTrackerURL = "https://www.curseforge.com/minecraft/mc-mods/world-of-stone"
 

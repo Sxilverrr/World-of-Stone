@@ -23,7 +23,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import dev.architectury.registry.registries.RegistrySupplier;
 
 import java.io.InputStream;
@@ -127,7 +126,7 @@ public final class WosClient {
 
         Map<String, Integer> tints = getSandTints();
         for (Map.Entry<String, Integer> e : tints.entrySet()) {
-            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(ModInfo.MODID, e.getKey()));
+            Block block = ForgeRegistries.BLOCKS.getValue(ModInfo.rl(e.getKey()));
             if (block != null) {
                 final int color = e.getValue();
                 event.register((s, w, p, t) -> color, block);
@@ -177,7 +176,7 @@ public final class WosClient {
 
         Map<String, Integer> tints = getSandTints();
         for (Map.Entry<String, Integer> e : tints.entrySet()) {
-            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(ModInfo.MODID, e.getKey()));
+            Block block = ForgeRegistries.BLOCKS.getValue(ModInfo.rl(e.getKey()));
             if (block != null) {
                 final int color = e.getValue();
                 event.register((stack, t) -> color, block.asItem());

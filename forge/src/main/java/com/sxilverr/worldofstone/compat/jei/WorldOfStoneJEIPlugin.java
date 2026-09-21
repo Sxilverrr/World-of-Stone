@@ -13,13 +13,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import dev.architectury.registry.registries.RegistrySupplier;
 import com.sxilverr.worldofstone.api.ModInfo;
 import com.sxilverr.worldofstone.api.enums.DecorativeSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.OreVariant;
 import com.sxilverr.worldofstone.api.enums.VanillaOreHost;
 import com.sxilverr.worldofstone.config.WosConfig;
+import com.sxilverr.worldofstone.config.WosConfigSync;
 import com.sxilverr.worldofstone.registry.WosBlocks;
 import com.sxilverr.worldofstone.registry.WosItems;
 
@@ -37,8 +37,32 @@ public class WorldOfStoneJEIPlugin implements IModPlugin {
         return UID;
     }
 
+    private static IJeiRuntime runtime;
+    private static List<ItemStack> hidden = List.of();
+    private static boolean listening;
+
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        runtime = jeiRuntime;
+        hidden = List.of();
+        if (!listening) {
+            listening = true;
+            WosConfigSync.addListener(WorldOfStoneJEIPlugin::refreshHidden);
+        }
+        refreshHidden();
+    }
+
+    @Override
+    public void onRuntimeUnavailable() {
+        runtime = null;
+        hidden = List.of();
+    }
+
+    private static void refreshHidden() {
+        if (runtime == null) {
+            return;
+        }
+
         List<ItemStack> hide = new ArrayList<>();
 
         if (!WosConfig.stoneReplacementEnabled) {
@@ -100,12 +124,14 @@ public class WorldOfStoneJEIPlugin implements IModPlugin {
             add(hide, WosBlocks.MIMIC_SPELEOTHEM);
         }
 
-        if (hide.isEmpty()) {
-            return;
+        IIngredientManager manager = runtime.getIngredientManager();
+        if (!hidden.isEmpty()) {
+            manager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, hidden);
         }
-
-        IIngredientManager manager = jeiRuntime.getIngredientManager();
-        manager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, hide);
+        if (!hide.isEmpty()) {
+            manager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, hide);
+        }
+        hidden = hide;
     }
 
     private static void addTag(List<ItemStack> hide, String tagPath) {

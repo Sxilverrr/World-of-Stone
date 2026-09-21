@@ -1,6 +1,5 @@
 package com.sxilverr.worldofstone.mixin;
 
-import com.sxilverr.worldofstone.common.block.WosInfestedBlock;
 import com.sxilverr.worldofstone.config.WosConfig;
 import com.sxilverr.worldofstone.registry.WosBlocks;
 import net.minecraft.world.level.block.Block;
@@ -18,66 +17,8 @@ public abstract class InfestedBlockMixin {
     private static void wos$gateInfestedConversion(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (WosConfig.enableInfestedBlocks) return;
         Block host = state.getBlock();
-        if (wos$isWosHost(host)) {
+        if (WosBlocks.isInfestedHost(host)) {
             cir.setReturnValue(false);
         }
-    }
-
-    private static boolean wos$isWosHost(Block host) {
-        for (var ro : WosBlocks.IGNEOUS_STONE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.IGNEOUS_COBBLE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.IGNEOUS_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.IGNEOUS_MOSSY_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.IGNEOUS_CRACKED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.IGNEOUS_CHISELED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_STONE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_COBBLE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_MOSSY_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_CRACKED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.METAMORPHIC_CHISELED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_STONE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_COBBLE.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_MOSSY_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_CRACKED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        for (var ro : WosBlocks.SEDIMENTARY_CHISELED_BRICK.values()) {
-            if (ro.isPresent() && ro.get() == host) return true;
-        }
-        return host instanceof WosInfestedBlock;
     }
 }

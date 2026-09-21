@@ -98,6 +98,7 @@ tasks.processResources {
         "name" to mod.name,
         "version" to mod.version,
         "minecraft" to common.mod.prop("mc_dep_forgelike"),
+        "neoforge_range" to common.mod.prop("neoforge_range"),
         "architectury_range" to common.mod.prop("architectury_range")
     )
 }

@@ -98,7 +98,7 @@ def convert_tree(rel_src, rel_dst, kind):
                 obj["type"] = "neoforge:add_features"
             dump(obj, out)
             stats["biome_modifier"] += 1
-        else:  # copy as-is
+        else:
             out.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(p, out)
             stats[kind] += 1
@@ -107,7 +107,6 @@ def convert_tree(rel_src, rel_dst, kind):
 def main():
     if DST.exists():
         shutil.rmtree(DST)
-    # worldofstone
     convert_tree("worldofstone/recipes", "worldofstone/recipe", "recipe")
     convert_tree("worldofstone/loot_tables", "worldofstone/loot_table", "loot")
     convert_tree("worldofstone/tags/blocks", "worldofstone/tags/block", "tag")
@@ -117,7 +116,6 @@ def main():
                  "worldofstone/neoforge/biome_modifier", "biome_modifier")
     convert_tree("worldofstone/pe_custom_conversions",
                  "worldofstone/pe_custom_conversions", "other")
-    # minecraft tags
     convert_tree("minecraft/tags/blocks", "minecraft/tags/block", "tag")
     convert_tree("minecraft/tags/items", "minecraft/tags/item", "tag")
     print("Conversion complete:", json.dumps(stats, indent=2))

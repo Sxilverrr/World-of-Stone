@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 public final class ModInfo {
 
     public static final String MODID = "worldofstone";
-    public static final String NAME = "World of Stone";
 
     public static ResourceLocation rl(String path) {
         //? if >=1.21.1 {
