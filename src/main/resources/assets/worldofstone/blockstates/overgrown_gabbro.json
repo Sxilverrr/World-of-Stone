@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_gabbro"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_gabbro"
+      },
+      {
+        "model": "worldofstone:block/overgrown_gabbro",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_gabbro",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_gabbro",
+        "y": 270
+      }
+    ]
   }
 }

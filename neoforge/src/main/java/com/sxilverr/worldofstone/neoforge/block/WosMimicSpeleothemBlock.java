@@ -15,7 +15,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -80,9 +79,9 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
-            BlockState source = wos$readSource(stack);
-            if (source != null) mimic.setSource(source);
+        CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (data != null && level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
+            WosMimicSpeleothemBlockEntity.readSource(data.copyTag()).ifPresent(mimic::setSource);
         }
     }
 
@@ -90,24 +89,11 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
         if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
-            ResourceLocation rl = BuiltInRegistries.BLOCK.getKey(mimic.getSourceState().getBlock());
-            if (rl != null) {
-                CompoundTag tag = new CompoundTag();
-                tag.putString("Source", rl.toString());
-                stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
-            }
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(mimic.getSourceState().getBlock());
+            CompoundTag tag = new CompoundTag();
+            tag.putString("Source", id.toString());
+            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
         }
         return stack;
-    }
-
-    private static BlockState wos$readSource(ItemStack stack) {
-        CustomData cd = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (cd == null) return null;
-        CompoundTag tag = cd.copyTag();
-        if (!tag.contains("Source")) return null;
-        ResourceLocation rl = ResourceLocation.tryParse(tag.getString("Source"));
-        if (rl == null) return null;
-        Block source = BuiltInRegistries.BLOCK.containsKey(rl) ? BuiltInRegistries.BLOCK.get(rl) : null;
-        return source != null ? source.defaultBlockState() : null;
     }
 }

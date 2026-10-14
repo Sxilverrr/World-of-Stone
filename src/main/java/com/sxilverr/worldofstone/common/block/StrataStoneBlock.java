@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,8 +46,7 @@ public class StrataStoneBlock extends Block {
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         ItemStack tool = params.getOptionalParameter(LootContextParams.TOOL);
-        boolean silk = hasSilkTouch(tool, params);
-        if (silk) return super.getDrops(state, params);
+        if (hasSilkTouch(tool, params.getLevel())) return super.getDrops(state, params);
 
         if (isLignite) {
             if (WosConfig.ligniteDropsLigniteCobblestone && cobbleVariant != null) {
@@ -81,11 +81,11 @@ public class StrataStoneBlock extends Block {
         return super.getDrops(state, params);
     }
 
-    private static boolean hasSilkTouch(ItemStack tool, LootParams.Builder params) {
+    public static boolean hasSilkTouch(ItemStack tool, Level level) {
         if (tool == null) return false;
         //? if >=1.21.1 {
         /*net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> silk =
-                params.getLevel().registryAccess()
+                level.registryAccess()
                         .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
                         .getOrThrow(Enchantments.SILK_TOUCH);
         return EnchantmentHelper.getItemEnchantmentLevel(silk, tool) > 0;

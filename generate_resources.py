@@ -641,6 +641,11 @@ def cube_all_blockstate(name):
     return {"variants": {"": {"model": f"worldofstone:block/{name}"}}}
 
 
+def y_rotated_blockstate(name):
+    model = f"worldofstone:block/{name}"
+    return {"variants": {"": [{"model": model}] + [{"model": model, "y": y} for y in (90, 180, 270)]}}
+
+
 def cube_all_blockstate_rot(name):
     model = f"worldofstone:block/{name}"
     variants = []
@@ -1443,7 +1448,7 @@ def write_pillared_block(name, side_tex, top_tex, bottom_tex, tool="pickaxe"):
 
 
 def write_overgrown_block(name, stone_tex):
-    write_json(os.path.join(DST_ASSETS, "blockstates", f"{name}.json"), cube_all_blockstate(name))
+    write_json(os.path.join(DST_ASSETS, "blockstates", f"{name}.json"), y_rotated_blockstate(name))
     write_json(os.path.join(DST_ASSETS, "models", "block", f"{name}.json"),
                overgrown_model_with_tint(stone_tex))
     write_json(os.path.join(DST_ASSETS, "models", "item", f"{name}.json"), item_model_block(name))

@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_greenschist"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_greenschist"
+      },
+      {
+        "model": "worldofstone:block/overgrown_greenschist",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_greenschist",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_greenschist",
+        "y": 270
+      }
+    ]
   }
 }

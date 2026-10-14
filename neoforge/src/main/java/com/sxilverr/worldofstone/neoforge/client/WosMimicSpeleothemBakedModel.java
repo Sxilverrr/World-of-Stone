@@ -11,14 +11,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
@@ -119,14 +115,8 @@ public class WosMimicSpeleothemBakedModel implements IDynamicBakedModel {
     }
 
     private static BlockState readSourceFromStack(ItemStack stack) {
-        CustomData cd = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (cd == null) return Blocks.STONE.defaultBlockState();
-        CompoundTag tag = cd.copyTag();
-        if (!tag.contains("Source")) return Blocks.STONE.defaultBlockState();
-        ResourceLocation rl = ResourceLocation.tryParse(tag.getString("Source"));
-        if (rl == null) return Blocks.STONE.defaultBlockState();
-        Block source = BuiltInRegistries.BLOCK.containsKey(rl) ? BuiltInRegistries.BLOCK.get(rl) : null;
-        return source != null ? source.defaultBlockState() : Blocks.STONE.defaultBlockState();
+        CustomData data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+        return data == null ? Blocks.STONE.defaultBlockState() : WosMimicSpeleothemBlockEntity.readSource(data.copyTag()).orElse(Blocks.STONE.defaultBlockState());
     }
 
     private static class MimicItemOverrides extends ItemOverrides {

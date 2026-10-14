@@ -12,9 +12,9 @@ val common: Project = requireNotNull(stonecutter.node.sibling("")?.project) {
     "No common project for $project"
 }
 
-version = "$minecraft-${mod.version}-$loader"
+version = "${mod.version}-$minecraft"
 base {
-    archivesName.set(mod.id)
+    archivesName.set("${mod.id}-$loader")
 }
 architectury {
     platformSetupLoomIde()
@@ -53,7 +53,6 @@ dependencies {
 
     val jei = common.mod.dep("jei")
     modCompileOnly("mezz.jei:jei-$minecraft-common-api:$jei")
-    modCompileOnly("mezz.jei:jei-$minecraft-neoforge-api:$jei")
     modRuntimeOnly("mezz.jei:jei-$minecraft-neoforge:$jei")
     modCompileOnly("curse.maven:just-enough-resources-jer-240630:${common.mod.dep("jer")}")
 

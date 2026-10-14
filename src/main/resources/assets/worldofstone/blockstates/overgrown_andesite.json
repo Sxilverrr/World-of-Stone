@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_andesite"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_andesite"
+      },
+      {
+        "model": "worldofstone:block/overgrown_andesite",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_andesite",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_andesite",
+        "y": 270
+      }
+    ]
   }
 }

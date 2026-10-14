@@ -17,6 +17,8 @@ architectury.common(stonecutter.tree.branches.mapNotNull {
 
 repositories {
     maven("https://maven.architectury.dev/")
+    maven("https://maven.blamejared.com")
+    maven("https://cursemaven.com") { content { includeGroup("curse.maven") } }
 }
 
 dependencies {
@@ -24,8 +26,9 @@ dependencies {
 
     mappings(loom.officialMojangMappings())
 
-    modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
     modImplementation("dev.architectury:architectury:${mod.dep("architectury_api")}")
+    modCompileOnly("mezz.jei:jei-$minecraft-common-api:${mod.dep("jei")}")
+    compileOnly("curse.maven:just-enough-resources-jer-240630:${mod.dep("jer")}")
 }
 
 java {

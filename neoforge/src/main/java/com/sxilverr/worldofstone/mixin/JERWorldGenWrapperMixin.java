@@ -1,9 +1,7 @@
 package com.sxilverr.worldofstone.mixin;
 
-import com.sxilverr.worldofstone.api.enums.IgneousVariant;
-import com.sxilverr.worldofstone.api.enums.MetamorphicVariant;
 import com.sxilverr.worldofstone.api.enums.OreVariant;
-import com.sxilverr.worldofstone.api.enums.SedimentaryVariant;
+import com.sxilverr.worldofstone.api.enums.StrataVariant;
 import com.sxilverr.worldofstone.api.enums.VanillaOreHost;
 import com.sxilverr.worldofstone.registry.WosBlocks;
 import com.mojang.logging.LogUtils;
@@ -11,7 +9,6 @@ import jeresources.entry.WorldGenEntry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import dev.architectury.registry.registries.RegistrySupplier;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -57,12 +54,9 @@ public abstract class JERWorldGenWrapperMixin {
 
         List<ItemStack> blocks = new ArrayList<>(original);
         int before = blocks.size();
-        for (IgneousVariant v : IgneousVariant.VALUES) wos$add(blocks, v.toString(), ore);
-        for (MetamorphicVariant v : MetamorphicVariant.VALUES) wos$add(blocks, v.toString(), ore);
-        for (SedimentaryVariant v : SedimentaryVariant.VALUES) wos$add(blocks, v.toString(), ore);
+        for (StrataVariant v : StrataVariant.ALL) wos$add(blocks, v.toString(), ore);
         for (VanillaOreHost h : VanillaOreHost.VALUES) {
-            if (h.getDimension() != VanillaOreHost.HostDimension.OVERWORLD) continue;
-            wos$add(blocks, h.getRegistryName(), ore);
+            if (h.dimension == VanillaOreHost.HostDimension.OVERWORLD) wos$add(blocks, h.toString(), ore);
         }
         if (blocks.size() == before) return;
         cir.setReturnValue(blocks);
@@ -73,10 +67,7 @@ public abstract class JERWorldGenWrapperMixin {
     }
 
     private static void wos$add(List<ItemStack> blocks, String hostName, OreVariant ore) {
-        String name = hostName + "_" + ore.suffix;
-        RegistrySupplier<Block> ro = WosBlocks.ORES.get(name);
-        if (ro != null && ro.isPresent()) {
-            blocks.add(new ItemStack(ro.get()));
-        }
+        Block variant = WosBlocks.ore(hostName, ore);
+        if (variant != null) blocks.add(new ItemStack(variant));
     }
 }

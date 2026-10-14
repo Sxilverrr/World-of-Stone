@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_diorite"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_diorite"
+      },
+      {
+        "model": "worldofstone:block/overgrown_diorite",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_diorite",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_diorite",
+        "y": 270
+      }
+    ]
   }
 }

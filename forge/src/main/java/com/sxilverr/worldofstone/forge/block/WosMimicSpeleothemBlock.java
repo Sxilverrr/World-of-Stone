@@ -2,20 +2,23 @@ package com.sxilverr.worldofstone.forge.block;
 
 import com.sxilverr.worldofstone.common.block.WosSpeleothemBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements EntityBlock {
@@ -31,8 +34,7 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
 
     @Override
     public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
             BlockState source = mimic.getSourceState();
             return source.getBlock().getSoundType(source, level, pos, entity);
         }
@@ -40,18 +42,16 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     }
 
     @Override
-    public float getDestroyProgress(BlockState state, net.minecraft.world.entity.player.Player player, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
+    public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
             return mimic.getSourceState().getDestroyProgress(player, level, pos);
         }
         return super.getDestroyProgress(state, player, level, pos);
     }
 
     @Override
-    public boolean canHarvestBlock(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.entity.player.Player player) {
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
+    public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
             return mimic.getSourceState().canHarvestBlock(level, pos, player);
         }
         if (!state.requiresCorrectToolForDrops()) return true;
@@ -59,18 +59,16 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     }
 
     @Override
-    public float getExplosionResistance(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.level.Explosion explosion) {
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
+    public float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
             return mimic.getSourceState().getExplosionResistance(level, pos, explosion);
         }
         return super.getExplosionResistance(state, level, pos, explosion);
     }
 
     @Override
-    public int getLightEmission(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
             return mimic.getSourceState().getLightEmission(level, pos);
         }
         return super.getLightEmission(state, level, pos);
@@ -79,32 +77,20 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
-            CompoundTag tag = stack.getTagElement("BlockEntityTag");
-            if (tag != null && tag.contains("Source")) {
-                ResourceLocation rl = ResourceLocation.tryParse(tag.getString("Source"));
-                if (rl != null) {
-                    Block source = ForgeRegistries.BLOCKS.getValue(rl);
-                    if (source != null) {
-                        mimic.setSource(source.defaultBlockState());
-                    }
-                }
-            }
+        CompoundTag tag = stack.getTagElement("BlockEntityTag");
+        if (tag != null && level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
+            WosMimicSpeleothemBlockEntity.readSource(tag).ifPresent(mimic::setSource);
         }
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult target, net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.entity.player.Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WosMimicSpeleothemBlockEntity mimic) {
-            ResourceLocation rl = ForgeRegistries.BLOCKS.getKey(mimic.getSourceState().getBlock());
-            if (rl != null) {
-                CompoundTag tag = new CompoundTag();
-                tag.putString("Source", rl.toString());
-                stack.addTagElement("BlockEntityTag", tag);
-            }
+        if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(mimic.getSourceState().getBlock());
+            CompoundTag tag = new CompoundTag();
+            tag.putString("Source", id.toString());
+            stack.addTagElement("BlockEntityTag", tag);
         }
         return stack;
     }

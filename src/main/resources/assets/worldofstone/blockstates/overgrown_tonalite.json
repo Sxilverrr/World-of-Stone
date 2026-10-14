@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_tonalite"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_tonalite"
+      },
+      {
+        "model": "worldofstone:block/overgrown_tonalite",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_tonalite",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_tonalite",
+        "y": 270
+      }
+    ]
   }
 }

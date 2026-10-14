@@ -1,44 +1,30 @@
 package com.sxilverr.worldofstone.api.enums;
 
 public enum VanillaSpeleothemVariant {
-    STONE("stone", "Stone Speleothem", "minecraft:block/stone"),
-    GRANITE("granite", "Granite Speleothem", "minecraft:block/granite"),
-    DIORITE("diorite", "Diorite Speleothem", "minecraft:block/diorite"),
-    ANDESITE("andesite", "Andesite Speleothem", "minecraft:block/andesite"),
-    DEEPSLATE("deepslate", "Deepslate Speleothem", "minecraft:block/deepslate"),
-    TUFF("tuff", "Tuff Speleothem", "minecraft:block/tuff"),
-    CALCITE("calcite", "Calcite Speleothem", "minecraft:block/calcite"),
-    DRIPSTONE("dripstone", "Dripstone Speleothem", "minecraft:block/dripstone_block"),
-    NETHERRACK("netherrack", "Netherrack Speleothem", "minecraft:block/netherrack"),
-    BASALT("basalt", "Basalt Speleothem", "minecraft:block/basalt_side"),
-    SMOOTH_BASALT("smooth_basalt", "Smooth Basalt Speleothem", "minecraft:block/smooth_basalt"),
-    BLACKSTONE("blackstone", "Blackstone Speleothem", "minecraft:block/blackstone"),
-    END_STONE("end_stone", "End Stone Speleothem", "minecraft:block/end_stone"),
-    SANDSTONE("sandstone", "Sandstone Speleothem", "minecraft:block/sandstone"),
-    RED_SANDSTONE("red_sandstone", "Red Sandstone Speleothem", "minecraft:block/red_sandstone");
+    STONE("stone"),
+    GRANITE("granite"),
+    DIORITE("diorite"),
+    ANDESITE("andesite"),
+    DEEPSLATE("deepslate"),
+    TUFF("tuff"),
+    CALCITE("calcite"),
+    DRIPSTONE("dripstone_block"),
+    NETHERRACK("netherrack"),
+    BASALT("basalt"),
+    SMOOTH_BASALT("smooth_basalt"),
+    BLACKSTONE("blackstone"),
+    END_STONE("end_stone"),
+    SANDSTONE("sandstone"),
+    RED_SANDSTONE("red_sandstone");
 
-    public static final VanillaSpeleothemVariant[] VALUES = values();
+    public final String host;
 
-    private final String registryName;
-    private final String displayName;
-    private final String textureRef;
-
-    VanillaSpeleothemVariant(String registryName, String displayName, String textureRef) {
-        this.registryName = registryName;
-        this.displayName = displayName;
-        this.textureRef = textureRef;
+    VanillaSpeleothemVariant(String host) {
+        this.host = "minecraft:" + host;
     }
 
     public String getRegistryName() {
-        return registryName + "_speleothem";
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getTextureRef() {
-        return textureRef;
+        return this + "_speleothem";
     }
 
     @Override

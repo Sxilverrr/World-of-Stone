@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_chert"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_chert"
+      },
+      {
+        "model": "worldofstone:block/overgrown_chert",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_chert",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_chert",
+        "y": 270
+      }
+    ]
   }
 }

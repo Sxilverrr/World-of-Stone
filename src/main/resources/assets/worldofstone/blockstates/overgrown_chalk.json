@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "worldofstone:block/overgrown_chalk"
-    }
+    "": [
+      {
+        "model": "worldofstone:block/overgrown_chalk"
+      },
+      {
+        "model": "worldofstone:block/overgrown_chalk",
+        "y": 90
+      },
+      {
+        "model": "worldofstone:block/overgrown_chalk",
+        "y": 180
+      },
+      {
+        "model": "worldofstone:block/overgrown_chalk",
+        "y": 270
+      }
+    ]
   }
 }

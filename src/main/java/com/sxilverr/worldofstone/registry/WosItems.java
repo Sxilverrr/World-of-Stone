@@ -26,9 +26,6 @@ public final class WosItems {
         }
     }
 
-    public static void init() {
-    }
-
     private WosItems() {
     }
 }

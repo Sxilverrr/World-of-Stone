@@ -1,20 +1,20 @@
 package com.sxilverr.worldofstone.forge.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import com.sxilverr.worldofstone.forge.registry.WosBlockEntities;
+
+import java.util.Optional;
 
 public class WosMimicSpeleothemBlockEntity extends BlockEntity {
 
@@ -23,7 +23,15 @@ public class WosMimicSpeleothemBlockEntity extends BlockEntity {
     private BlockState sourceState = Blocks.STONE.defaultBlockState();
 
     public WosMimicSpeleothemBlockEntity(BlockPos pos, BlockState state) {
-        super(WosBlockEntities.MIMIC_SPELEOTHEM.get(), pos, state);
+        super(WosLoaderBlocks.MIMIC_ENTITY.get(), pos, state);
+    }
+
+    public static Optional<BlockState> readSource(CompoundTag tag) {
+        if (!tag.contains("Source")) return Optional.empty();
+        return Optional.ofNullable(ResourceLocation.tryParse(tag.getString("Source")))
+                .flatMap(BuiltInRegistries.BLOCK::getOptional)
+                .filter(block -> block != Blocks.AIR)
+                .map(block -> block.defaultBlockState());
     }
 
     public BlockState getSourceState() {
@@ -31,10 +39,9 @@ public class WosMimicSpeleothemBlockEntity extends BlockEntity {
     }
 
     public void setSource(BlockState state) {
-        if (state == null || state.isAir()) return;
-        if (this.sourceState == state) return;
-        BlockState old = this.sourceState;
-        this.sourceState = state;
+        if (state == null || state.isAir() || sourceState == state) return;
+        BlockState old = sourceState;
+        sourceState = state;
         setChanged();
         requestModelDataUpdate();
         if (level != null && !level.isClientSide) {
@@ -48,23 +55,13 @@ public class WosMimicSpeleothemBlockEntity extends BlockEntity {
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("Source")) {
-            String id = tag.getString("Source");
-            ResourceLocation rl = ResourceLocation.tryParse(id);
-            if (rl != null) {
-                Block block = ForgeRegistries.BLOCKS.getValue(rl);
-                if (block != null && block != Blocks.AIR) {
-                    sourceState = block.defaultBlockState();
-                }
-            }
-        }
+        readSource(tag).ifPresent(state -> sourceState = state);
     }
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
-        ResourceLocation rl = ForgeRegistries.BLOCKS.getKey(sourceState.getBlock());
-        if (rl != null) tag.putString("Source", rl.toString());
+        tag.putString("Source", BuiltInRegistries.BLOCK.getKey(sourceState.getBlock()).toString());
     }
 
     @Override
