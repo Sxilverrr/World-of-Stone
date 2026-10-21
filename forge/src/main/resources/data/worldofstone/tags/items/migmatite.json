@@ -25,6 +25,8 @@
     "worldofstone:migmatite_button",
     "worldofstone:migmatite_sand",
     "worldofstone:migmatite_gravel",
-    "worldofstone:migmatite_clay"
+    "worldofstone:migmatite_clay",
+    "worldofstone:migmatite_glass",
+    "worldofstone:migmatite_glass_pane"
   ]
 }

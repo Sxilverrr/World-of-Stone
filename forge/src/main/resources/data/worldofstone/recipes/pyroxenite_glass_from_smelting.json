@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "worldofstone:pyroxenite_sand"
+  },
+  "result": "worldofstone:pyroxenite_glass",
+  "experience": 0.1,
+  "cookingtime": 200
+}

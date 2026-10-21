@@ -3,9 +3,6 @@ package com.sxilverr.worldofstone.neoforge.block;
 import com.sxilverr.worldofstone.common.block.WosSpeleothemBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -89,10 +86,7 @@ public class WosMimicSpeleothemBlock extends WosSpeleothemBlock implements Entit
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
         if (level.getBlockEntity(pos) instanceof WosMimicSpeleothemBlockEntity mimic) {
-            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(mimic.getSourceState().getBlock());
-            CompoundTag tag = new CompoundTag();
-            tag.putString("Source", id.toString());
-            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(mimic.sourceTag()));
         }
         return stack;
     }

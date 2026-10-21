@@ -9,10 +9,12 @@ Applies the 1.21 datapack changes verified against vanilla 1.21.1 data:
     -> neoforge:conditions + neoforge:mod_loaded. Ingredients unchanged.
   - loot: match_tool enchantment predicate wraps into
     predicate.predicates["minecraft:enchantments"] with key "enchantment"->
-    "enchantments". apply_bonus/table_bonus/etc unchanged. Skips the single
-    copy_nbt file (mimic_speleothem, not registered on neoforge).
+    "enchantments". apply_bonus/table_bonus/etc unchanged. copy_nbt (the mimic
+    speleothem) -> copy_components of minecraft:block_entity_data.
   - biome modifiers: forge:add_features -> neoforge:add_features, dir forge->neoforge
-Deferred (not converted here): data/forge tags (forge:->c: ore-dictionary mapping).
+  - data/forge tags -> data/c tags, content unchanged; cobblestone/gravel/sand
+    become plural, sandstone becomes sandstone/blocks, glass becomes glass_blocks
+    and glass/silica becomes glass_blocks/cheap
 """
 import json, os, shutil
 from pathlib import Path
@@ -21,8 +23,12 @@ ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "forge" / "src" / "main" / "resources" / "data"
 DST = ROOT / "neoforge" / "src" / "main" / "resources" / "data"
 
-stats = {"recipe": 0, "loot": 0, "loot_skipped": 0, "tag": 0, "worldgen": 0,
+stats = {"recipe": 0, "loot": 0, "tag": 0, "worldgen": 0,
          "biome_modifier": 0, "other": 0}
+
+C_TAG_RENAMES = {"cobblestone.json": "cobblestones.json", "gravel.json": "gravels.json",
+                 "sand.json": "sands.json", "sandstone.json": "sandstone/blocks.json",
+                 "glass.json": "glass_blocks.json", "glass/silica.json": "glass_blocks/cheap.json"}
 
 
 def load(p):
@@ -61,6 +67,10 @@ def fix_recipe(obj):
 
 def fix_loot(node):
     if isinstance(node, dict):
+        if node.get("function") == "minecraft:copy_nbt":
+            node.clear()
+            node.update({"function": "minecraft:copy_components", "source": "block_entity",
+                         "include": ["minecraft:block_entity_data"]})
         pred = node.get("predicate")
         if isinstance(pred, dict) and isinstance(pred.get("enchantments"), list):
             lst = pred.pop("enchantments")
@@ -82,14 +92,13 @@ def convert_tree(rel_src, rel_dst, kind):
         return
     for p in base.rglob("*.json"):
         rel = p.relative_to(base)
+        if rel_dst.startswith("c/"):
+            rel = C_TAG_RENAMES.get(rel.as_posix(), rel)
         out = DST / rel_dst / rel
         if kind == "recipe":
             dump(fix_recipe(load(p)), out)
             stats["recipe"] += 1
         elif kind == "loot":
-            if p.name == "mimic_speleothem.json":
-                stats["loot_skipped"] += 1
-                continue
             dump(fix_loot(load(p)), out)
             stats["loot"] += 1
         elif kind == "biome_modifier":
@@ -118,6 +127,8 @@ def main():
                  "worldofstone/pe_custom_conversions", "other")
     convert_tree("minecraft/tags/blocks", "minecraft/tags/block", "tag")
     convert_tree("minecraft/tags/items", "minecraft/tags/item", "tag")
+    convert_tree("forge/tags/blocks", "c/tags/block", "tag")
+    convert_tree("forge/tags/items", "c/tags/item", "tag")
     print("Conversion complete:", json.dumps(stats, indent=2))
 
 

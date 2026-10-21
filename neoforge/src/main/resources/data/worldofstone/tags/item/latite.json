@@ -25,6 +25,8 @@
     "worldofstone:latite_button",
     "worldofstone:latite_sand",
     "worldofstone:latite_gravel",
-    "worldofstone:latite_clay"
+    "worldofstone:latite_clay",
+    "worldofstone:latite_glass",
+    "worldofstone:latite_glass_pane"
   ]
 }

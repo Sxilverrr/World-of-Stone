@@ -1,0 +1,80 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": [
+    {
+      "item": "worldofstone:adamellite_sand"
+    },
+    {
+      "item": "worldofstone:pyroxenite_sand"
+    },
+    {
+      "item": "worldofstone:rhyolite_sand"
+    },
+    {
+      "item": "worldofstone:tonalite_sand"
+    },
+    {
+      "item": "worldofstone:gabbro_sand"
+    },
+    {
+      "item": "worldofstone:latite_sand"
+    },
+    {
+      "item": "worldofstone:komatiite_sand"
+    },
+    {
+      "item": "worldofstone:dacite_sand"
+    },
+    {
+      "item": "worldofstone:gneiss_sand"
+    },
+    {
+      "item": "worldofstone:eclogite_sand"
+    },
+    {
+      "item": "worldofstone:marble_sand"
+    },
+    {
+      "item": "worldofstone:quartzite_sand"
+    },
+    {
+      "item": "worldofstone:blueschist_sand"
+    },
+    {
+      "item": "worldofstone:greenschist_sand"
+    },
+    {
+      "item": "worldofstone:soapstone_sand"
+    },
+    {
+      "item": "worldofstone:migmatite_sand"
+    },
+    {
+      "item": "worldofstone:limestone_sand"
+    },
+    {
+      "item": "worldofstone:chalk_sand"
+    },
+    {
+      "item": "worldofstone:shale_sand"
+    },
+    {
+      "item": "worldofstone:siltstone_sand"
+    },
+    {
+      "item": "worldofstone:lignite_sand"
+    },
+    {
+      "item": "worldofstone:dolomite_sand"
+    },
+    {
+      "item": "worldofstone:greywacke_sand"
+    },
+    {
+      "item": "worldofstone:chert_sand"
+    }
+  ],
+  "result": "minecraft:glass",
+  "experience": 0.1,
+  "cookingtime": 200
+}

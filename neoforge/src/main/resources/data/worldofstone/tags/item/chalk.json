@@ -25,6 +25,8 @@
     "worldofstone:chalk_button",
     "worldofstone:chalk_sand",
     "worldofstone:chalk_gravel",
-    "worldofstone:chalk_clay"
+    "worldofstone:chalk_clay",
+    "worldofstone:chalk_glass",
+    "worldofstone:chalk_glass_pane"
   ]
 }

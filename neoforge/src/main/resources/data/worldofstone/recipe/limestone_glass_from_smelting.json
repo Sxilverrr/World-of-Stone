@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "worldofstone:limestone_sand"
+  },
+  "result": {
+    "id": "worldofstone:limestone_glass"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

@@ -1,7 +1,6 @@
 package com.sxilverr.worldofstone.mixin;
 
 import com.google.gson.JsonElement;
-import com.sxilverr.worldofstone.api.ModInfo;
 import com.sxilverr.worldofstone.config.WosConfig;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,13 +31,10 @@ public abstract class RecipeManagerMixin {
 
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("TAIL"))
     private void wos$filterRecipes(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo ci) {
-        if (!wos$filteringActive()) {
-            return;
-        }
         List<RecipeHolder<?>> keep = new ArrayList<>();
         boolean changed = false;
         for (RecipeHolder<?> holder : getRecipes()) {
-            if (wos$isRemoved(holder.value())) {
+            if (wos$isRemoved(holder.id(), holder.value())) {
                 changed = true;
             } else {
                 keep.add(holder);
@@ -49,39 +45,14 @@ public abstract class RecipeManagerMixin {
         }
     }
 
-    private static boolean wos$filteringActive() {
-        return !WosConfig.stoneReplacementEnabled
-                || !WosConfig.allowOvergrownStrata
-                || !WosConfig.allowSnowedStrata
-                || !WosConfig.allowOvergrownVanillaVariants
-                || !WosConfig.allowSnowedVanillaVariants;
-    }
-
-    private static boolean wos$isRemoved(Recipe<?> recipe) {
+    private static boolean wos$isRemoved(ResourceLocation id, Recipe<?> recipe) {
         ItemStack result;
         try {
             result = recipe.getResultItem(RegistryAccess.EMPTY);
         } catch (Throwable t) {
-            return false;
+            result = ItemStack.EMPTY;
         }
-        if (result == null || result.isEmpty()) {
-            return false;
-        }
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(result.getItem());
-        if (key == null || !ModInfo.MODID.equals(key.getNamespace())) {
-            return false;
-        }
-        String path = key.getPath();
-        boolean strata = WosConfig.isStrataVariantPath(path);
-        if (!WosConfig.stoneReplacementEnabled && strata) {
-            return true;
-        }
-        if (path.startsWith("overgrown_")) {
-            return strata ? !WosConfig.allowOvergrownStrata : !WosConfig.allowOvergrownVanillaVariants;
-        }
-        if (path.startsWith("snowed_")) {
-            return strata ? !WosConfig.allowSnowedStrata : !WosConfig.allowSnowedVanillaVariants;
-        }
-        return false;
+        ResourceLocation key = result == null || result.isEmpty() ? null : BuiltInRegistries.ITEM.getKey(result.getItem());
+        return WosConfig.isRecipeDisabled(id, key);
     }
 }

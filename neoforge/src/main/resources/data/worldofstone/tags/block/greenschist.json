@@ -25,6 +25,8 @@
     "worldofstone:greenschist_button",
     "worldofstone:greenschist_sand",
     "worldofstone:greenschist_gravel",
-    "worldofstone:greenschist_clay"
+    "worldofstone:greenschist_clay",
+    "worldofstone:greenschist_glass",
+    "worldofstone:greenschist_glass_pane"
   ]
 }

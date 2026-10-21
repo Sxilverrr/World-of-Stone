@@ -25,6 +25,8 @@
     "worldofstone:shale_button",
     "worldofstone:shale_sand",
     "worldofstone:shale_gravel",
-    "worldofstone:shale_clay"
+    "worldofstone:shale_clay",
+    "worldofstone:shale_glass",
+    "worldofstone:shale_glass_pane"
   ]
 }

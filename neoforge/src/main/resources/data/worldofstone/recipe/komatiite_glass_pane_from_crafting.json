@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "worldofstone:komatiite_glass"
+    }
+  },
+  "result": {
+    "count": 16,
+    "id": "worldofstone:komatiite_glass_pane"
+  }
+}

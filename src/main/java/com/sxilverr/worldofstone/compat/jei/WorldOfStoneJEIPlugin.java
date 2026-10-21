@@ -85,6 +85,10 @@ public class WorldOfStoneJEIPlugin implements IModPlugin {
         }
         if (!WosConfig.allowOvergrownStrata) addAll(hide, StrataBlock.OVERGROWN.all());
         if (!WosConfig.allowSnowedStrata) addAll(hide, StrataBlock.SNOWED.all());
+        if (!WosConfig.enableStrataGlass) {
+            addAll(hide, StrataBlock.GLASS.all());
+            addAll(hide, StrataBlock.GLASS_PANE.all());
+        }
         if (!WosConfig.allowOvergrownVanillaVariants) addAll(hide, WosBlocks.VANILLA_HOST_OVERGROWN.values().stream().map(RegistrySupplier::get).toList());
         if (!WosConfig.allowSnowedVanillaVariants) addAll(hide, WosBlocks.VANILLA_HOST_SNOWED.values().stream().map(RegistrySupplier::get).toList());
         if (!WosConfig.speleothemsEnabled) {

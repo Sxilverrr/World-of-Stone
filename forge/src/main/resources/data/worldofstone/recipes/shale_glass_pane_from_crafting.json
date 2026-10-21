@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "worldofstone:shale_glass"
+    }
+  },
+  "result": {
+    "item": "worldofstone:shale_glass_pane",
+    "count": 16
+  }
+}

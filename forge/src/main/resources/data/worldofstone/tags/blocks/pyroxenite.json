@@ -25,6 +25,8 @@
     "worldofstone:pyroxenite_button",
     "worldofstone:pyroxenite_sand",
     "worldofstone:pyroxenite_gravel",
-    "worldofstone:pyroxenite_clay"
+    "worldofstone:pyroxenite_clay",
+    "worldofstone:pyroxenite_glass",
+    "worldofstone:pyroxenite_glass_pane"
   ]
 }

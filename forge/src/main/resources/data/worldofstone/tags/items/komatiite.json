@@ -25,6 +25,8 @@
     "worldofstone:komatiite_button",
     "worldofstone:komatiite_sand",
     "worldofstone:komatiite_gravel",
-    "worldofstone:komatiite_clay"
+    "worldofstone:komatiite_clay",
+    "worldofstone:komatiite_glass",
+    "worldofstone:komatiite_glass_pane"
   ]
 }

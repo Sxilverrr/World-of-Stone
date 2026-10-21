@@ -2,12 +2,15 @@ package com.sxilverr.worldofstone.neoforge.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,10 +62,22 @@ public class WosMimicSpeleothemBlockEntity extends BlockEntity {
         readSource(tag).ifPresent(state -> sourceState = state);
     }
 
+    public CompoundTag sourceTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("Source", BuiltInRegistries.BLOCK.getKey(sourceState.getBlock()).toString());
+        return tag;
+    }
+
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putString("Source", BuiltInRegistries.BLOCK.getKey(sourceState.getBlock()).toString());
+        tag.merge(sourceTag());
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        components.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(sourceTag()));
     }
 
     @Override

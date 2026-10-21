@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "worldofstone:adamellite_glass_pane",
+    "worldofstone:pyroxenite_glass_pane",
+    "worldofstone:rhyolite_glass_pane",
+    "worldofstone:tonalite_glass_pane",
+    "worldofstone:gabbro_glass_pane",
+    "worldofstone:latite_glass_pane",
+    "worldofstone:komatiite_glass_pane",
+    "worldofstone:dacite_glass_pane",
+    "worldofstone:gneiss_glass_pane",
+    "worldofstone:eclogite_glass_pane",
+    "worldofstone:marble_glass_pane",
+    "worldofstone:quartzite_glass_pane",
+    "worldofstone:blueschist_glass_pane",
+    "worldofstone:greenschist_glass_pane",
+    "worldofstone:soapstone_glass_pane",
+    "worldofstone:migmatite_glass_pane",
+    "worldofstone:limestone_glass_pane",
+    "worldofstone:chalk_glass_pane",
+    "worldofstone:shale_glass_pane",
+    "worldofstone:siltstone_glass_pane",
+    "worldofstone:lignite_glass_pane",
+    "worldofstone:dolomite_glass_pane",
+    "worldofstone:greywacke_glass_pane",
+    "worldofstone:chert_glass_pane"
+  ]
+}

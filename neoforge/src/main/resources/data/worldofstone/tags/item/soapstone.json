@@ -25,6 +25,8 @@
     "worldofstone:soapstone_button",
     "worldofstone:soapstone_sand",
     "worldofstone:soapstone_gravel",
-    "worldofstone:soapstone_clay"
+    "worldofstone:soapstone_clay",
+    "worldofstone:soapstone_glass",
+    "worldofstone:soapstone_glass_pane"
   ]
 }

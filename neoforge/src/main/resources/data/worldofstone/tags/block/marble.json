@@ -25,6 +25,8 @@
     "worldofstone:marble_button",
     "worldofstone:marble_sand",
     "worldofstone:marble_gravel",
-    "worldofstone:marble_clay"
+    "worldofstone:marble_clay",
+    "worldofstone:marble_glass",
+    "worldofstone:marble_glass_pane"
   ]
 }

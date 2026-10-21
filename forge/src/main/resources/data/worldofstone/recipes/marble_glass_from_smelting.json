@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "worldofstone:marble_sand"
+  },
+  "result": "worldofstone:marble_glass",
+  "experience": 0.1,
+  "cookingtime": 200
+}

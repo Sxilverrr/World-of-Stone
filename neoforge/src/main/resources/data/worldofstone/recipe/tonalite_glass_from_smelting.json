@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "worldofstone:tonalite_sand"
+  },
+  "result": {
+    "id": "worldofstone:tonalite_glass"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

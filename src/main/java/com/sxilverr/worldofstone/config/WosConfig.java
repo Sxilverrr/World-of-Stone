@@ -1,5 +1,6 @@
 package com.sxilverr.worldofstone.config;
 
+import com.sxilverr.worldofstone.api.ModInfo;
 import com.sxilverr.worldofstone.api.enums.DecorativeSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.ModdedSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.NoiseType;
@@ -8,6 +9,7 @@ import com.sxilverr.worldofstone.api.enums.TerracottaSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.VanillaOreHost;
 import com.sxilverr.worldofstone.api.enums.VanillaSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.WorldgenSystem;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -80,6 +82,9 @@ public final class WosConfig {
     public static boolean stoneDropsCobblestone = true;
     public static boolean ligniteDropsLigniteCobblestone = false;
     public static boolean enableInfestedBlocks = true;
+    public static boolean enableStrataGlass = false;
+
+    private static final ResourceLocation PLAIN_GLASS_RECIPE = ModInfo.rl("glass_from_strata_sand");
 
     public static final Map<StrataVariant, Boolean> VARIANT_ENABLED = new EnumMap<>(StrataVariant.class);
     public static final Map<StrataVariant, Integer> VARIANT_WEIGHT = new EnumMap<>(StrataVariant.class);
@@ -132,6 +137,18 @@ public final class WosConfig {
             if (path.contains(v.toString())) return true;
         }
         return false;
+    }
+
+    public static boolean isRecipeDisabled(ResourceLocation id, ResourceLocation result) {
+        if (id.equals(PLAIN_GLASS_RECIPE)) return enableStrataGlass;
+        if (ModInfo.MODID.equals(id.getNamespace()) && id.getPath().endsWith("_from_strata_glass")) return !enableStrataGlass;
+        if (result == null || !ModInfo.MODID.equals(result.getNamespace())) return false;
+        String path = result.getPath();
+        boolean strata = isStrataVariantPath(path);
+        if (!stoneReplacementEnabled && strata) return true;
+        if (path.startsWith("overgrown_")) return strata ? !allowOvergrownStrata : !allowOvergrownVanillaVariants;
+        if (path.startsWith("snowed_")) return strata ? !allowSnowedStrata : !allowSnowedVanillaVariants;
+        return strata && (path.endsWith("_glass") || path.endsWith("_glass_pane")) && !enableStrataGlass;
     }
 
     public static boolean isVanillaOreHostEnabled(VanillaOreHost host) {

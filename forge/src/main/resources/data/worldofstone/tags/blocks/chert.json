@@ -25,6 +25,8 @@
     "worldofstone:chert_button",
     "worldofstone:chert_sand",
     "worldofstone:chert_gravel",
-    "worldofstone:chert_clay"
+    "worldofstone:chert_clay",
+    "worldofstone:chert_glass",
+    "worldofstone:chert_glass_pane"
   ]
 }

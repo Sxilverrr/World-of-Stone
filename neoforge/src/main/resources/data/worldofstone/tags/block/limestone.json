@@ -25,6 +25,8 @@
     "worldofstone:limestone_button",
     "worldofstone:limestone_sand",
     "worldofstone:limestone_gravel",
-    "worldofstone:limestone_clay"
+    "worldofstone:limestone_clay",
+    "worldofstone:limestone_glass",
+    "worldofstone:limestone_glass_pane"
   ]
 }

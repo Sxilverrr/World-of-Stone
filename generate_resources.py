@@ -6,15 +6,15 @@ import urllib.request
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-MODROOT = os.path.join(ROOT, "forge")
-RES = os.path.join(MODROOT, "src", "main", "resources")
-SRC_TEX = os.path.join(RES, "assets", "worldofstone", "textures", "block")
+COMMON_RES = os.path.join(ROOT, "src", "main", "resources")
+RES = os.path.join(ROOT, "forge", "src", "main", "resources")
+SRC_TEX = os.path.join(COMMON_RES, "assets", "worldofstone", "textures", "block")
 SRC_OVERLAY_DIR = os.path.join(SRC_TEX, "overlays", "overgrown")
-SRC_ITEM_TEX = os.path.join(RES, "assets", "worldofstone", "textures", "item")
+SRC_ITEM_TEX = os.path.join(COMMON_RES, "assets", "worldofstone", "textures", "item")
 VANILLA_CACHE = os.path.join(ROOT, ".vanilla_textures")
 VANILLA_BASE_URL = "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block"
 
-DST_ASSETS = os.path.join(RES, "assets", "worldofstone")
+DST_ASSETS = os.path.join(COMMON_RES, "assets", "worldofstone")
 DST_DATA = os.path.join(RES, "data", "worldofstone")
 DST_MC_TAGS = os.path.join(RES, "data", "minecraft", "tags", "blocks")
 DST_MC_ITEM_TAGS = os.path.join(RES, "data", "minecraft", "tags", "items")
@@ -701,8 +701,8 @@ def overgrown_model_with_tint(stone_tex):
                 }
             },
             {
-                "from": [-0.005, -0.005, -0.005],
-                "to": [16.005, 16.005, 16.005],
+                "from": [0, 0, 0],
+                "to": [16, 16, 16],
                 "faces": {
                     "north": {"uv": [0, 0, 16, 16], "texture": "#grass_overlay", "cullface": "north", "tintindex": 0},
                     "south": {"uv": [0, 0, 16, 16], "texture": "#grass_overlay", "cullface": "south", "tintindex": 0},
@@ -1691,6 +1691,61 @@ def write_sand(variant):
     track_tool(name, "shovel")
 
 
+def write_glass(variant):
+    name = f"{variant}_glass"
+    write_json(os.path.join(DST_ASSETS, "blockstates", f"{name}.json"), cube_all_blockstate(name))
+    write_json(os.path.join(DST_ASSETS, "models", "block", f"{name}.json"),
+               {"parent": "minecraft:block/leaves", "textures": {"all": "minecraft:block/white_stained_glass"}})
+    write_json(os.path.join(DST_ASSETS, "models", "item", f"{name}.json"), item_model_block(name))
+    write_json(os.path.join(DST_DATA, "loot_tables", "blocks", f"{name}.json"), silk_only_loot(name))
+    write_recipe(f"{name}_from_smelting", smelting_recipe(f"worldofstone:{name}", f"worldofstone:{variant}_sand"))
+    register_lang_block(name)
+    pane = f"{name}_pane"
+    write_json(os.path.join(DST_ASSETS, "blockstates", f"{pane}.json"), glass_pane_blockstate())
+    write_json(os.path.join(DST_ASSETS, "models", "item", f"{pane}.json"),
+               {"parent": "minecraft:item/generated", "textures": {"layer0": "minecraft:block/white_stained_glass"}})
+    write_json(os.path.join(DST_DATA, "loot_tables", "blocks", f"{pane}.json"), silk_only_loot(pane))
+    write_recipe(f"{pane}_from_crafting", shaped_recipe(f"worldofstone:{pane}", 16, ["###", "###"], f"worldofstone:{name}"))
+    register_lang_block(pane)
+
+
+def glass_pane_blockstate():
+    parts = [{"apply": {"model": "worldofstone:block/strata_glass_pane_post"}}]
+    for side, value, part, y in (("north", "true", "side", 0), ("east", "true", "side", 90),
+                                 ("south", "true", "side_alt", 0), ("west", "true", "side_alt", 90),
+                                 ("north", "false", "noside", 0), ("east", "false", "noside_alt", 0),
+                                 ("south", "false", "noside_alt", 90), ("west", "false", "noside", 270)):
+        apply = {"model": f"worldofstone:block/strata_glass_pane_{part}"}
+        if y:
+            apply["y"] = y
+        parts.append({"apply": apply, "when": {side: value}})
+    return {"multipart": parts}
+
+
+def write_glass_pane_models():
+    parts = {
+        "post": ([7, 0, 7], [9, 16, 9], {"down": ("edge", [7, 7, 9, 9]), "up": ("edge", [7, 7, 9, 9])}),
+        "side": ([7, 0, 0], [9, 16, 7], {"down": ("edge", [7, 0, 9, 7]), "up": ("edge", [7, 0, 9, 7]), "north": ("edge", [7, 0, 9, 16]),
+                                         "west": ("pane", [16, 0, 9, 16]), "east": ("pane", [9, 0, 16, 16])}),
+        "side_alt": ([7, 0, 9], [9, 16, 16], {"down": ("edge", [7, 0, 9, 7]), "up": ("edge", [7, 0, 9, 7]), "south": ("edge", [7, 0, 9, 16]),
+                                              "west": ("pane", [7, 0, 0, 16]), "east": ("pane", [0, 0, 7, 16])}),
+        "noside": ([7, 0, 7], [9, 16, 9], {"north": ("pane", [9, 0, 7, 16])}),
+        "noside_alt": ([7, 0, 7], [9, 16, 9], {"east": ("pane", [7, 0, 9, 16])}),
+    }
+    for part, (frm, to, faces) in parts.items():
+        out = {}
+        for face, (tex, uv) in faces.items():
+            out[face] = {"uv": uv, "texture": f"#{tex}", "tintindex": 0}
+            if part.startswith("side") and face in ("north", "south"):
+                out[face]["cullface"] = face
+        write_json(os.path.join(DST_ASSETS, "models", "block", f"strata_glass_pane_{part}.json"), {
+            "ambientocclusion": False,
+            "textures": {"particle": "minecraft:block/white_stained_glass", "pane": "minecraft:block/white_stained_glass",
+                         "edge": "minecraft:block/white_stained_glass_pane_top"},
+            "elements": [{"from": frm, "to": to, "faces": out}]
+        })
+
+
 def write_gravel(variant):
     tex = f"{variant}_gravel"
     variant_stone_path = os.path.join(DST_BLOCK_TEX, variant + ".png")
@@ -1942,8 +1997,7 @@ def write_tile_set(variant):
     TILE_WALLS.append(wall_name)
     CRACKED_TILE_BLOCKS.append(cracked_name)
     ns = "worldofstone:"
-    brick_input = ns + (f"{variant}_bricks" if variant in (IGNEOUS + METAMORPHIC) else f"polished_{variant}")
-    write_recipe(f"{tile_name}_from_crafting", bricks_craft(ns + tile_name, brick_input))
+    write_recipe(f"{tile_name}_from_crafting", bricks_craft(ns + tile_name, ns + f"{variant}_bricks"))
     write_recipe(f"{stairs_name}_from_crafting", stairs_craft(ns + stairs_name, ns + tile_name))
     write_recipe(f"{slab_name}_from_crafting", slab_craft(ns + slab_name, ns + tile_name))
     write_recipe(f"{wall_name}_from_crafting", wall_craft(ns + wall_name, ns + tile_name))
@@ -2514,23 +2568,10 @@ def write_overgrown_vanilla_set(host):
     write_overgrown_recipes(host, f"minecraft:{host}")
 
 
-DST_WOS_TAGS = None
-DST_WOS_ITEM_TAGS = None
-
-
-def _wos_tag_paths():
-    global DST_WOS_TAGS, DST_WOS_ITEM_TAGS
-    if DST_WOS_TAGS is None:
-        DST_WOS_TAGS = os.path.join(ROOT, "src", "main", "resources", "data", "worldofstone", "tags", "blocks")
-        DST_WOS_ITEM_TAGS = os.path.join(ROOT, "src", "main", "resources", "data", "worldofstone", "tags", "items")
-    return DST_WOS_TAGS, DST_WOS_ITEM_TAGS
-
-
 def write_wos_tag(path_segment, values):
-    blocks_dir, items_dir = _wos_tag_paths()
     payload = {"replace": False, "values": safe_tag_values(values)}
-    write_json(os.path.join(blocks_dir, f"{path_segment}.json"), payload)
-    write_json(os.path.join(items_dir, f"{path_segment}.json"), payload)
+    write_json(os.path.join(DST_DATA, "tags", "blocks", f"{path_segment}.json"), payload)
+    write_json(os.path.join(DST_DATA, "tags", "items", f"{path_segment}.json"), payload)
 
 
 def write_world_of_stone_tags():
@@ -2624,6 +2665,11 @@ def write_world_of_stone_tags():
             write_wos_tag(f"{variant}/{sub_name}", ids)
         umbrella = [f"worldofstone:{variant}"]
         umbrella += [f"#worldofstone:{variant}/{sub_name}" for sub_name in subs.keys()]
+        umbrella += [f"worldofstone:{name}" for name in (
+            f"cracked_{variant}_bricks", f"chiseled_{variant}_bricks",
+            f"infested_{variant}", f"infested_{variant}_cobblestone", f"infested_{variant}_bricks",
+            f"infested_mossy_{variant}_bricks", f"infested_cracked_{variant}_bricks", f"infested_chiseled_{variant}_bricks",
+            f"{variant}_button", f"{variant}_sand", f"{variant}_gravel", f"{variant}_clay", f"{variant}_glass", f"{variant}_glass_pane")]
         write_wos_tag(variant, umbrella)
 
     igneous_refs = [f"#worldofstone:{v}" for v in IGNEOUS]
@@ -2724,8 +2770,10 @@ def main():
             write_json(os.path.join(DST_DATA, "loot_tables", "blocks", f"{variant}.json"),
                        cobble_drops_loot(variant, variant + "_cobblestone", fossil_chance=0.05))
 
+    write_glass_pane_models()
     for variant in ALL_VARIANTS:
         write_sand(variant)
+        write_glass(variant)
         write_sandstone_set(variant)
         write_gravel(variant)
         write_clay(variant)
@@ -3027,10 +3075,33 @@ def main():
     for ids in ORE_BLOCKS_BY_TYPE.values():
         all_ore_ids.extend(f"worldofstone:{n}" for n in ids)
 
-    write_json(os.path.join(DST_MC_ITEM_TAGS, "smelts_to_glass.json"), {
-        "replace": False,
-        "values": sand_ids
+    write_recipe("glass_from_strata_sand", {
+        "type": "minecraft:smelting",
+        "ingredient": [{"item": i} for i in sand_ids],
+        "result": "minecraft:glass",
+        "experience": 0.1,
+        "cookingtime": 200
     })
+    glass_ids = [f"worldofstone:{v}_glass" for v in ALL_VARIANTS]
+    pane_ids = [f"worldofstone:{v}_glass_pane" for v in ALL_VARIANTS]
+    write_wos_tag("strata_glass", glass_ids)
+    for tag_dir in (DST_FORGE_TAGS, DST_FORGE_ITEM_TAGS):
+        for path, ids in (("glass", glass_ids), ("glass/silica", glass_ids), ("glass_panes", pane_ids)):
+            write_json(os.path.join(tag_dir, f"{path}.json"), {"replace": False, "values": ids})
+    for result, pattern, key, count in (
+            ("beacon", ["GGG", "GSG", "OOO"], {"O": "minecraft:obsidian", "S": "minecraft:nether_star"}, 1),
+            ("daylight_detector", ["GGG", "QQQ", "WWW"], {"Q": "minecraft:quartz", "W": "#minecraft:wooden_slabs"}, 1),
+            ("end_crystal", ["GGG", "GEG", "GTG"], {"E": "minecraft:ender_eye", "T": "minecraft:ghast_tear"}, 1),
+            ("glass_bottle", ["G G", " G "], {}, 3),
+            ("tinted_glass", [" S ", "SGS", " S "], {"S": "minecraft:amethyst_shard"}, 2)):
+        keys = {"G": {"tag": "worldofstone:strata_glass"}}
+        keys.update({k: {"tag": v[1:]} if v.startswith("#") else {"item": v} for k, v in key.items()})
+        write_recipe(f"{result}_from_strata_glass", {
+            "type": "minecraft:crafting_shaped",
+            "pattern": pattern,
+            "key": keys,
+            "result": {"item": f"minecraft:{result}", "count": count}
+        })
     write_json(os.path.join(DST_MC_TAGS, "sand.json"), {
         "replace": False,
         "values": sand_ids
@@ -3181,8 +3252,12 @@ def main():
         "result": {"item": "minecraft:blast_furnace"}
     })
 
-    sand_tints_dir = DST_DATA
-    write_json(os.path.join(sand_tints_dir, "sand_tints.json"), {})
+    tints = {}
+    for v in ALL_VARIANTS:
+        with Image.open(os.path.join(DST_BLOCK_TEX, f"{v}_sand.png")) as sand:
+            r, g, b = sand.convert("RGB").resize((1, 1), Image.BOX).getpixel((0, 0))
+        tints[f"{v}_glass"] = tints[f"{v}_glass_pane"] = {"r": r, "g": g, "b": b}
+    write_json(os.path.join(COMMON_RES, "data", "worldofstone", "sand_tints.json"), tints)
 
     print(f"Generated {len(LANG)} language entries, {len(PICKAXE_BLOCKS)} pickaxe + {len(SHOVEL_BLOCKS)} shovel tagged blocks, {len(SPELEOTHEM_BLOCKS)} speleothems, {len(VANILLA_HOST_ORE_BLOCKS)} vanilla-host ores, {len(SMOOTH_STONE_BLOCKS)} smooth stones")
 

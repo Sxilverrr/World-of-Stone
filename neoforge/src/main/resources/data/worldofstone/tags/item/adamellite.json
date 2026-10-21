@@ -25,6 +25,8 @@
     "worldofstone:adamellite_button",
     "worldofstone:adamellite_sand",
     "worldofstone:adamellite_gravel",
-    "worldofstone:adamellite_clay"
+    "worldofstone:adamellite_clay",
+    "worldofstone:adamellite_glass",
+    "worldofstone:adamellite_glass_pane"
   ]
 }

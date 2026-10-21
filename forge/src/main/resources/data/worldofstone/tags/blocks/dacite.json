@@ -25,6 +25,8 @@
     "worldofstone:dacite_button",
     "worldofstone:dacite_sand",
     "worldofstone:dacite_gravel",
-    "worldofstone:dacite_clay"
+    "worldofstone:dacite_clay",
+    "worldofstone:dacite_glass",
+    "worldofstone:dacite_glass_pane"
   ]
 }

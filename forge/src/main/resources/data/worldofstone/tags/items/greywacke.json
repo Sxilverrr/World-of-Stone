@@ -25,6 +25,8 @@
     "worldofstone:greywacke_button",
     "worldofstone:greywacke_sand",
     "worldofstone:greywacke_gravel",
-    "worldofstone:greywacke_clay"
+    "worldofstone:greywacke_clay",
+    "worldofstone:greywacke_glass",
+    "worldofstone:greywacke_glass_pane"
   ]
 }

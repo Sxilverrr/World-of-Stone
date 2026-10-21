@@ -25,6 +25,8 @@
     "worldofstone:tonalite_button",
     "worldofstone:tonalite_sand",
     "worldofstone:tonalite_gravel",
-    "worldofstone:tonalite_clay"
+    "worldofstone:tonalite_clay",
+    "worldofstone:tonalite_glass",
+    "worldofstone:tonalite_glass_pane"
   ]
 }

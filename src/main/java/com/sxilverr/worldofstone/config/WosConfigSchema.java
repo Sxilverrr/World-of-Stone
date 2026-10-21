@@ -156,6 +156,7 @@ public final class WosConfigSchema {
         bind(b.comment("Strata stones drop cobblestone unless mined with silk touch.").define("stoneDropsCobblestone", true), v -> WosConfig.stoneDropsCobblestone = v);
         bind(b.comment("Lignite drops lignite cobblestone instead of lignite coal.").define("ligniteDropsLigniteCobblestone", false), v -> WosConfig.ligniteDropsLigniteCobblestone = v);
         bind(b.comment("Enable infested block variants.").define("enableInfestedBlocks", true), v -> WosConfig.enableInfestedBlocks = v);
+        bind(b.comment("Strata sand smelts into its own tinted glass instead of regular glass.").define("enableStrataGlass", false), v -> WosConfig.enableStrataGlass = v);
         b.pop();
 
         b.push("vanillaStoneOres");

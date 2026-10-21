@@ -25,6 +25,8 @@
     "worldofstone:rhyolite_button",
     "worldofstone:rhyolite_sand",
     "worldofstone:rhyolite_gravel",
-    "worldofstone:rhyolite_clay"
+    "worldofstone:rhyolite_clay",
+    "worldofstone:rhyolite_glass",
+    "worldofstone:rhyolite_glass_pane"
   ]
 }

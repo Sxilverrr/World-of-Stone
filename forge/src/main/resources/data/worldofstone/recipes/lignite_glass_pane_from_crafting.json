@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "worldofstone:lignite_glass"
+    }
+  },
+  "result": {
+    "item": "worldofstone:lignite_glass_pane",
+    "count": 16
+  }
+}

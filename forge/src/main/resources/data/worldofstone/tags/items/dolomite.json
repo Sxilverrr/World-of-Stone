@@ -25,6 +25,8 @@
     "worldofstone:dolomite_button",
     "worldofstone:dolomite_sand",
     "worldofstone:dolomite_gravel",
-    "worldofstone:dolomite_clay"
+    "worldofstone:dolomite_clay",
+    "worldofstone:dolomite_glass",
+    "worldofstone:dolomite_glass_pane"
   ]
 }

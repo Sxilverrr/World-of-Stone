@@ -25,6 +25,8 @@
     "worldofstone:lignite_button",
     "worldofstone:lignite_sand",
     "worldofstone:lignite_gravel",
-    "worldofstone:lignite_clay"
+    "worldofstone:lignite_clay",
+    "worldofstone:lignite_glass",
+    "worldofstone:lignite_glass_pane"
   ]
 }

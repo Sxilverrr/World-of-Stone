@@ -25,6 +25,8 @@
     "worldofstone:gneiss_button",
     "worldofstone:gneiss_sand",
     "worldofstone:gneiss_gravel",
-    "worldofstone:gneiss_clay"
+    "worldofstone:gneiss_clay",
+    "worldofstone:gneiss_glass",
+    "worldofstone:gneiss_glass_pane"
   ]
 }

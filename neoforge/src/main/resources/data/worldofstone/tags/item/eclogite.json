@@ -25,6 +25,8 @@
     "worldofstone:eclogite_button",
     "worldofstone:eclogite_sand",
     "worldofstone:eclogite_gravel",
-    "worldofstone:eclogite_clay"
+    "worldofstone:eclogite_clay",
+    "worldofstone:eclogite_glass",
+    "worldofstone:eclogite_glass_pane"
   ]
 }

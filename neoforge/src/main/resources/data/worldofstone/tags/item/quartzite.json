@@ -25,6 +25,8 @@
     "worldofstone:quartzite_button",
     "worldofstone:quartzite_sand",
     "worldofstone:quartzite_gravel",
-    "worldofstone:quartzite_clay"
+    "worldofstone:quartzite_clay",
+    "worldofstone:quartzite_glass",
+    "worldofstone:quartzite_glass_pane"
   ]
 }

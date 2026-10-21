@@ -42,7 +42,7 @@ public final class WosClient {
             DecorativeSpeleothemVariant.HONEY);
     private static final List<DecorativeSpeleothemVariant> FOLIAGE = List.of(DecorativeSpeleothemVariant.OAK_LEAVES, DecorativeSpeleothemVariant.JUNGLE_LEAVES,
             DecorativeSpeleothemVariant.ACACIA_LEAVES, DecorativeSpeleothemVariant.DARK_OAK_LEAVES, DecorativeSpeleothemVariant.MANGROVE_LEAVES);
-    private static final int MYALITE_PURPLE = 0xAE51DA;
+    private static final int MYALITE_PURPLE = 0xFFAE51DA;
 
     private static Map<Block, Integer> constantTints;
 
@@ -61,6 +61,8 @@ public final class WosClient {
         });
         if (WosBlocks.MIMIC_SPELEOTHEM != null && WosBlocks.MIMIC_SPELEOTHEM.isPresent()) cutout.add(WosBlocks.MIMIC_SPELEOTHEM.get());
         RenderTypeRegistry.register(RenderType.cutoutMipped(), cutout.toArray(Block[]::new));
+        RenderTypeRegistry.register(RenderType.translucent(), StrataBlock.GLASS.all().toArray(Block[]::new));
+        RenderTypeRegistry.register(RenderType.translucent(), StrataBlock.GLASS_PANE.all().toArray(Block[]::new));
     }
 
     public static void blockColors(BiConsumer<BlockColor, Block> register) {
@@ -105,7 +107,7 @@ public final class WosClient {
                 JsonObject tints = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject();
                 for (String name : tints.keySet()) {
                     JsonObject rgb = tints.getAsJsonObject(name);
-                    int color = (rgb.get("r").getAsInt() << 16) | (rgb.get("g").getAsInt() << 8) | rgb.get("b").getAsInt();
+                    int color = 0xFF000000 | (rgb.get("r").getAsInt() << 16) | (rgb.get("g").getAsInt() << 8) | rgb.get("b").getAsInt();
                     BuiltInRegistries.BLOCK.getOptional(ModInfo.rl(name)).ifPresent(block -> constantTints.put(block, color));
                 }
             }

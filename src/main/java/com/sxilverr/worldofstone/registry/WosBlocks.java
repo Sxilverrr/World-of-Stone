@@ -24,9 +24,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.InfestedBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
@@ -173,6 +175,27 @@ public final class WosBlocks {
     static Block sand() {
         return /*? if >=1.21.1 {*//*new net.minecraft.world.level.block.ColoredFallingBlock(new net.minecraft.util.ColorRGBA(0xDDD2A3),*//*?} else {*/new net.minecraft.world.level.block.SandBlock(0xDDD2A3,/*?}*/
                 BlockBehaviour.Properties.of().mapColor(MapColor.SAND).sound(SoundType.SAND).strength(0.5F, 0.5F));
+    }
+
+    static Block glass() {
+        BlockBehaviour.Properties props = BlockBehaviour.Properties.of()
+                .instrument(NoteBlockInstrument.HAT)
+                .strength(0.3F)
+                .sound(SoundType.GLASS)
+                .noOcclusion()
+                .isValidSpawn((s, l, p, e) -> false)
+                .isRedstoneConductor((s, l, p) -> false)
+                .isSuffocating((s, l, p) -> false)
+                .isViewBlocking((s, l, p) -> false);
+        return /*? if >=1.21.1 {*//*new net.minecraft.world.level.block.TransparentBlock(props)*//*?} else {*/new net.minecraft.world.level.block.GlassBlock(props)/*?}*/;
+    }
+
+    static Block glassPane() {
+        return new IronBarsBlock(BlockBehaviour.Properties.of()
+                .instrument(NoteBlockInstrument.HAT)
+                .strength(0.3F)
+                .sound(SoundType.GLASS)
+                .noOcclusion());
     }
 
     static Block gravel() {

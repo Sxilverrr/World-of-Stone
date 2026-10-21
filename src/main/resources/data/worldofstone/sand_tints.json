@@ -1,1 +1,242 @@
-{}
+{
+  "adamellite_glass": {
+    "r": 202,
+    "g": 160,
+    "b": 133
+  },
+  "adamellite_glass_pane": {
+    "r": 202,
+    "g": 160,
+    "b": 133
+  },
+  "pyroxenite_glass": {
+    "r": 53,
+    "g": 53,
+    "b": 45
+  },
+  "pyroxenite_glass_pane": {
+    "r": 53,
+    "g": 53,
+    "b": 45
+  },
+  "rhyolite_glass": {
+    "r": 146,
+    "g": 149,
+    "b": 135
+  },
+  "rhyolite_glass_pane": {
+    "r": 146,
+    "g": 149,
+    "b": 135
+  },
+  "tonalite_glass": {
+    "r": 197,
+    "g": 197,
+    "b": 196
+  },
+  "tonalite_glass_pane": {
+    "r": 197,
+    "g": 197,
+    "b": 196
+  },
+  "gabbro_glass": {
+    "r": 123,
+    "g": 116,
+    "b": 117
+  },
+  "gabbro_glass_pane": {
+    "r": 123,
+    "g": 116,
+    "b": 117
+  },
+  "latite_glass": {
+    "r": 105,
+    "g": 111,
+    "b": 110
+  },
+  "latite_glass_pane": {
+    "r": 105,
+    "g": 111,
+    "b": 110
+  },
+  "komatiite_glass": {
+    "r": 190,
+    "g": 160,
+    "b": 108
+  },
+  "komatiite_glass_pane": {
+    "r": 190,
+    "g": 160,
+    "b": 108
+  },
+  "dacite_glass": {
+    "r": 146,
+    "g": 146,
+    "b": 146
+  },
+  "dacite_glass_pane": {
+    "r": 146,
+    "g": 146,
+    "b": 146
+  },
+  "gneiss_glass": {
+    "r": 136,
+    "g": 136,
+    "b": 136
+  },
+  "gneiss_glass_pane": {
+    "r": 136,
+    "g": 136,
+    "b": 136
+  },
+  "eclogite_glass": {
+    "r": 141,
+    "g": 128,
+    "b": 122
+  },
+  "eclogite_glass_pane": {
+    "r": 141,
+    "g": 128,
+    "b": 122
+  },
+  "marble_glass": {
+    "r": 243,
+    "g": 242,
+    "b": 240
+  },
+  "marble_glass_pane": {
+    "r": 243,
+    "g": 242,
+    "b": 240
+  },
+  "quartzite_glass": {
+    "r": 175,
+    "g": 147,
+    "b": 127
+  },
+  "quartzite_glass_pane": {
+    "r": 175,
+    "g": 147,
+    "b": 127
+  },
+  "blueschist_glass": {
+    "r": 132,
+    "g": 160,
+    "b": 180
+  },
+  "blueschist_glass_pane": {
+    "r": 132,
+    "g": 160,
+    "b": 180
+  },
+  "greenschist_glass": {
+    "r": 134,
+    "g": 145,
+    "b": 125
+  },
+  "greenschist_glass_pane": {
+    "r": 134,
+    "g": 145,
+    "b": 125
+  },
+  "soapstone_glass": {
+    "r": 184,
+    "g": 184,
+    "b": 182
+  },
+  "soapstone_glass_pane": {
+    "r": 184,
+    "g": 184,
+    "b": 182
+  },
+  "migmatite_glass": {
+    "r": 125,
+    "g": 124,
+    "b": 126
+  },
+  "migmatite_glass_pane": {
+    "r": 125,
+    "g": 124,
+    "b": 126
+  },
+  "limestone_glass": {
+    "r": 184,
+    "g": 172,
+    "b": 149
+  },
+  "limestone_glass_pane": {
+    "r": 184,
+    "g": 172,
+    "b": 149
+  },
+  "chalk_glass": {
+    "r": 220,
+    "g": 210,
+    "b": 205
+  },
+  "chalk_glass_pane": {
+    "r": 220,
+    "g": 210,
+    "b": 205
+  },
+  "shale_glass": {
+    "r": 151,
+    "g": 153,
+    "b": 156
+  },
+  "shale_glass_pane": {
+    "r": 151,
+    "g": 153,
+    "b": 156
+  },
+  "siltstone_glass": {
+    "r": 214,
+    "g": 170,
+    "b": 147
+  },
+  "siltstone_glass_pane": {
+    "r": 214,
+    "g": 170,
+    "b": 147
+  },
+  "lignite_glass": {
+    "r": 27,
+    "g": 28,
+    "b": 22
+  },
+  "lignite_glass_pane": {
+    "r": 27,
+    "g": 28,
+    "b": 22
+  },
+  "dolomite_glass": {
+    "r": 125,
+    "g": 125,
+    "b": 103
+  },
+  "dolomite_glass_pane": {
+    "r": 125,
+    "g": 125,
+    "b": 103
+  },
+  "greywacke_glass": {
+    "r": 132,
+    "g": 132,
+    "b": 121
+  },
+  "greywacke_glass_pane": {
+    "r": 132,
+    "g": 132,
+    "b": 121
+  },
+  "chert_glass": {
+    "r": 134,
+    "g": 116,
+    "b": 105
+  },
+  "chert_glass_pane": {
+    "r": 134,
+    "g": 116,
+    "b": 105
+  }
+}

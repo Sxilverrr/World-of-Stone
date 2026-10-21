@@ -35,11 +35,15 @@ public final class WosCreativeTabs {
                 if (WosConfig.stoneReplacementEnabled) {
                     for (StrataVariant v : StrataVariant.ALL) {
                         for (StrataBlock kind : StrataBlock.values()) {
-                            if (shown(kind, v)) output.accept(kind.get(v));
+                            if (kind != StrataBlock.GLASS && kind != StrataBlock.GLASS_PANE && shown(kind, v)) output.accept(kind.get(v));
                         }
                         if (WosConfig.replaceVanillaOres) {
                             for (OreVariant ore : OreVariant.VALUES) output.accept(WosBlocks.ore(v.toString(), ore));
                         }
+                    }
+                    if (WosConfig.enableStrataGlass) {
+                        StrataBlock.GLASS.all().forEach(output::accept);
+                        StrataBlock.GLASS_PANE.all().forEach(output::accept);
                     }
                 }
                 if (WosConfig.replaceVanillaOres) {

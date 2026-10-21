@@ -47,6 +47,8 @@ public enum StrataBlock {
     INFESTED_CHISELED_BRICK("infested_chiseled_{}_bricks", infested(CHISELED_BRICK)),
     BUTTON("{}_button", v -> WosBlocks.button()),
     SAND("{}_sand", v -> WosBlocks.sand()),
+    GLASS("{}_glass", v -> WosBlocks.glass()),
+    GLASS_PANE("{}_glass_pane", v -> WosBlocks.glassPane()),
     SANDSTONE("{}_sandstone", block(Strength.SANDSTONE)),
     SANDSTONE_STAIRS("{}_sandstone_stairs", stairs(SANDSTONE, Strength.SANDSTONE)),
     SANDSTONE_SLAB("{}_sandstone_slab", slab(Strength.SANDSTONE)),

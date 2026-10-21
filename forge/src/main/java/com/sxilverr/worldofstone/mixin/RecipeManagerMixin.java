@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
-import com.sxilverr.worldofstone.api.ModInfo;
 import com.sxilverr.worldofstone.config.WosConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,13 +29,9 @@ public abstract class RecipeManagerMixin {
 
     @Inject(method = "apply", at = @At("TAIL"))
     private void wos$filterRecipes(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo ci) {
-        if (!wos$filteringActive()) {
-            return;
-        }
-
         Map<ResourceLocation, Recipe<?>> keep = new HashMap<>();
         for (Map.Entry<ResourceLocation, Recipe<?>> entry : this.byName.entrySet()) {
-            if (!wos$isRemoved(entry.getValue())) {
+            if (!wos$isRemoved(entry.getKey(), entry.getValue())) {
                 keep.put(entry.getKey(), entry.getValue());
             }
         }
@@ -56,39 +51,14 @@ public abstract class RecipeManagerMixin {
         this.byName = ImmutableMap.copyOf(keep);
     }
 
-    private static boolean wos$filteringActive() {
-        return !WosConfig.stoneReplacementEnabled
-                || !WosConfig.allowOvergrownStrata
-                || !WosConfig.allowSnowedStrata
-                || !WosConfig.allowOvergrownVanillaVariants
-                || !WosConfig.allowSnowedVanillaVariants;
-    }
-
-    private static boolean wos$isRemoved(Recipe<?> recipe) {
+    private static boolean wos$isRemoved(ResourceLocation id, Recipe<?> recipe) {
         ItemStack result;
         try {
             result = recipe.getResultItem(RegistryAccess.EMPTY);
         } catch (Throwable t) {
-            return false;
+            result = ItemStack.EMPTY;
         }
-        if (result == null || result.isEmpty()) {
-            return false;
-        }
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(result.getItem());
-        if (key == null || !ModInfo.MODID.equals(key.getNamespace())) {
-            return false;
-        }
-        String path = key.getPath();
-        boolean strata = WosConfig.isStrataVariantPath(path);
-        if (!WosConfig.stoneReplacementEnabled && strata) {
-            return true;
-        }
-        if (path.startsWith("overgrown_")) {
-            return strata ? !WosConfig.allowOvergrownStrata : !WosConfig.allowOvergrownVanillaVariants;
-        }
-        if (path.startsWith("snowed_")) {
-            return strata ? !WosConfig.allowSnowedStrata : !WosConfig.allowSnowedVanillaVariants;
-        }
-        return false;
+        ResourceLocation key = result == null || result.isEmpty() ? null : BuiltInRegistries.ITEM.getKey(result.getItem());
+        return WosConfig.isRecipeDisabled(id, key);
     }
 }

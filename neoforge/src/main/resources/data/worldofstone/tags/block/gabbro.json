@@ -25,6 +25,8 @@
     "worldofstone:gabbro_button",
     "worldofstone:gabbro_sand",
     "worldofstone:gabbro_gravel",
-    "worldofstone:gabbro_clay"
+    "worldofstone:gabbro_clay",
+    "worldofstone:gabbro_glass",
+    "worldofstone:gabbro_glass_pane"
   ]
 }

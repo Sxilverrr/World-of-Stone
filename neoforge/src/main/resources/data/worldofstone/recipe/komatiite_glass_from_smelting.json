@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "worldofstone:komatiite_sand"
+  },
+  "result": {
+    "id": "worldofstone:komatiite_glass"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

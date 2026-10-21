@@ -25,6 +25,8 @@
     "worldofstone:siltstone_button",
     "worldofstone:siltstone_sand",
     "worldofstone:siltstone_gravel",
-    "worldofstone:siltstone_clay"
+    "worldofstone:siltstone_clay",
+    "worldofstone:siltstone_glass",
+    "worldofstone:siltstone_glass_pane"
   ]
 }
