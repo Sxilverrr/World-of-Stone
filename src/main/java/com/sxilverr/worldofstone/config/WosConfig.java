@@ -6,6 +6,7 @@ import com.sxilverr.worldofstone.api.enums.ModdedSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.NoiseType;
 import com.sxilverr.worldofstone.api.enums.StrataVariant;
 import com.sxilverr.worldofstone.api.enums.TerracottaSpeleothemVariant;
+import com.sxilverr.worldofstone.api.enums.TextureStyle;
 import com.sxilverr.worldofstone.api.enums.VanillaOreHost;
 import com.sxilverr.worldofstone.api.enums.VanillaSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.WorldgenSystem;
@@ -83,6 +84,7 @@ public final class WosConfig {
     public static boolean ligniteDropsLigniteCobblestone = false;
     public static boolean enableInfestedBlocks = true;
     public static boolean enableStrataGlass = false;
+    public static transient TextureStyle textureStyle = TextureStyle.MODERN;
 
     private static final ResourceLocation PLAIN_GLASS_RECIPE = ModInfo.rl("glass_from_strata_sand");
 

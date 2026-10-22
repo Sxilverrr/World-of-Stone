@@ -4,6 +4,7 @@ import com.sxilverr.worldofstone.api.enums.ModdedSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.NoiseType;
 import com.sxilverr.worldofstone.api.enums.StrataVariant;
 import com.sxilverr.worldofstone.api.enums.TerracottaSpeleothemVariant;
+import com.sxilverr.worldofstone.api.enums.TextureStyle;
 import com.sxilverr.worldofstone.api.enums.VanillaOreHost;
 import com.sxilverr.worldofstone.api.enums.VanillaSpeleothemVariant;
 import com.sxilverr.worldofstone.api.enums.WorldgenSystem;
@@ -157,6 +158,10 @@ public final class WosConfigSchema {
         bind(b.comment("Lignite drops lignite cobblestone instead of lignite coal.").define("ligniteDropsLigniteCobblestone", false), v -> WosConfig.ligniteDropsLigniteCobblestone = v);
         bind(b.comment("Enable infested block variants.").define("enableInfestedBlocks", true), v -> WosConfig.enableInfestedBlocks = v);
         bind(b.comment("Strata sand smelts into its own tinted glass instead of regular glass.").define("enableStrataGlass", false), v -> WosConfig.enableStrataGlass = v);
+        b.pop();
+
+        b.push("client");
+        bind(b.comment("Stone texture style: MODERN or the original LEGACY textures. Only affects your client, press F3+T after changing it in game.").defineEnum("textureStyle", TextureStyle.MODERN), v -> WosConfig.textureStyle = v);
         b.pop();
 
         b.push("vanillaStoneOres");

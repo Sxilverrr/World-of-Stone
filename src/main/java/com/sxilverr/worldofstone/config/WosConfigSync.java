@@ -46,7 +46,7 @@ public final class WosConfigSync {
     static {
         for (Field field : WosConfig.class.getDeclaredFields()) {
             int modifiers = field.getModifiers();
-            if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers)) {
+            if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers) && !Modifier.isTransient(modifiers)) {
                 FIELDS.put(field.getName(), field);
             }
         }
