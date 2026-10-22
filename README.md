@@ -1,4 +1,4 @@
-<img width="768" height="456" alt="world_of_stone_title" src="https://github.com/user-attachments/assets/2ce9dff8-27c5-4001-8baf-b170532d726c" />
+<img width="768" height="456" alt="banner" src="https://github.com/user-attachments/assets/ec7683f1-746a-4ef4-91f7-76cc2884de30" />
 
 
 
